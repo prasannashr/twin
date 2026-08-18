@@ -1,4 +1,4 @@
-from openai import OpenAI
+
 from context import TWIN_SYSTEM_PROMPT
 from tools import tools, handle_tool_calls
 from styles import CSS, JS, EXAMPLES
@@ -12,7 +12,6 @@ load_dotenv(override=True)
 
 MODEL_NAME = "gpt-5.4-mini"
 
-openai = OpenAI()
 
 system = [{"role": "system", "content": TWIN_SYSTEM_PROMPT}]
 
