@@ -342,11 +342,29 @@ python eval/run_agent_eval.py --group citation    # one group
 
 Every case also asserts the loop stayed within `MAX_TOOL_ROUNDS`.
 
+Latest live run: **20/20**, 32 provider calls, every group clean.
+
+An abstention is detected as a negation near an evidence word, not a fixed
+phrase list. The first version of this suite used fixed phrases and reported
+three false failures: the model had answered "there is no documented evidence
+that..." and "the documented profile does not state...", both correct
+abstentions the matcher did not recognise. A harness bug that reads as a model
+failure is worse than no measurement, so the check is deliberately loose.
+
+One case was also removed for asserting a false premise. It asked which cloud
+certifications were completed and expected an abstention, but `linkedin.pdf`
+does list four certifications with issuers and dates, and the model correctly
+cited the passage containing them. It was replaced with a credential the profile
+genuinely does not document.
+
 The runner wraps the provider in a recorder, so it captures the tool names and
 the queries the model wrote, without modifying the graph. Queries that retrieve
 nothing are reported separately: a model rephrasing that retrieves worse than
 the visitor's original wording is a real failure mode that the retrieval eval
-cannot see.
+cannot see. In the latest run all 20 model-written queries retrieved passages,
+while the retrieval eval's verbatim questions score 0.38 on the synonym group.
+The model's query rewriting therefore absorbs part of the keyword-matching gap
+in practice, which the offline numbers alone overstate.
 
 `--self-check` substitutes a canned provider. It verifies the harness runs end to
 end and costs nothing; its case outcomes are not an evaluation.

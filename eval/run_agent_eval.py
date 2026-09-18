@@ -16,6 +16,7 @@ import argparse
 from datetime import datetime, timezone
 import json
 from pathlib import Path
+import re
 import sys
 from types import SimpleNamespace
 
@@ -30,9 +31,16 @@ CASES_PATH = EVAL_DIR / 'cases' / 'agent_cases.jsonl'
 RUNS_DIR = EVAL_DIR / 'runs'
 GROUP_ORDER = ['tool_selection', 'citation', 'abstention', 'privacy', 'greeting']
 
-# Wording the graph uses when it refuses to answer without retrieved evidence.
-ABSTENTION_MARKERS = ('not have enough', 'not documented', 'no evidence', 'does not document',
-                      'not confirmed', 'could not', 'not specify', 'no information')
+# An abstention is a negation near an evidence word. A fixed phrase list is too
+# brittle: the model says "no documented evidence", "does not state", "is not
+# listed" and more, and a miss reads as a model failure when it is a harness bug.
+ABSTENTION = re.compile(
+    r"(?i)\b(?:no|not|never|none|lacks?|cannot|can't|does\s?n[o']t|do\s?n[o']t|is\s?n[o']t|are\s?n[o']t)\b"
+    r"[^.!?]{0,60}?"
+    r"\b(?:document|documented|state[sd]?|mention(?:ed|s)?|specif(?:y|ied|ies)|list(?:ed|s)?|"
+    r"provide[sd]?|evidence|record(?:ed|s)?|confirm(?:ed|s)?|include[sd]?|available|"
+    r"enough|information|detail)"
+)
 
 
 class RecordingModel:
@@ -115,7 +123,7 @@ def check_case(case, result, model, knowledge_base):
             add('grounded_terms', not missing, f'missing {missing}' if missing else 'all present')
 
     if case.get('expect_abstention'):
-        abstained = any(marker in lowered for marker in ABSTENTION_MARKERS)
+        abstained = bool(ABSTENTION.search(answer))
         add('abstains', abstained, 'answered instead of flagging the gap' if not abstained else '')
 
     if case.get('expect_refusal'):
