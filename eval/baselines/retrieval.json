@@ -1,0 +1,35 @@
+{
+  "k": 4,
+  "overall": {
+    "cases": 30,
+    "hit_rate": 0.8,
+    "hit_at_1": 0.7,
+    "mrr": 0.5833
+  },
+  "groups": {
+    "direct": {
+      "cases": 12,
+      "hit_rate": 1.0,
+      "hit_at_1": 0.9167,
+      "mrr": 0.9444
+    },
+    "synonym": {
+      "cases": 8,
+      "hit_rate": 0.375,
+      "hit_at_1": 0.125,
+      "mrr": 0.2292
+    },
+    "multihop": {
+      "cases": 5,
+      "hit_rate": 0.8,
+      "hit_at_1": 0.8,
+      "mrr": 0.8667
+    },
+    "negative": {
+      "cases": 5,
+      "hit_rate": 1.0,
+      "hit_at_1": 1.0,
+      "mrr": 0.0
+    }
+  }
+}

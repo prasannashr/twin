@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Environment and secrets
+.env
+.env.*
+
+# Eval output (baselines are committed; run artefacts are not)
+eval/runs/
+
+# OS
+.DS_Store

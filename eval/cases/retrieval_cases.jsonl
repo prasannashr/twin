@@ -1,0 +1,30 @@
+{"id": "d01", "group": "direct", "question": "How did he scale the fraud risk assessment service?", "expect_all": ["7,500"]}
+{"id": "d02", "group": "direct", "question": "What rate limiting did he design at Intuit?", "expect_all": ["rate limiting"]}
+{"id": "d03", "group": "direct", "question": "Which test automation tools did he use at Intuit?", "expect_all": ["Karate", "WireMock"]}
+{"id": "d04", "group": "direct", "question": "What did he build at Expedia?", "expect_all": ["Expedia", "React"]}
+{"id": "d05", "group": "direct", "question": "What did he work on at Cisco?", "expect_all": ["Cisco", "AngularJS"]}
+{"id": "d06", "group": "direct", "question": "How large was the team he led at Javra?", "expect_all": ["six-member"]}
+{"id": "d07", "group": "direct", "question": "Where did he complete his master's degree?", "expect_all": ["Maharishi"]}
+{"id": "d08", "group": "direct", "question": "Which databases has he worked with?", "expect_all": ["PostgreSQL", "MongoDB"]}
+{"id": "d09", "group": "direct", "question": "What did he build at Ace Express Travel Services?", "expect_all": ["Amadeus"]}
+{"id": "d10", "group": "direct", "question": "Tell me about his research publication", "expect_all": ["Lohorung"]}
+{"id": "d11", "group": "direct", "question": "What disaster recovery work has he done?", "expect_all": ["disaster recovery"]}
+{"id": "d12", "group": "direct", "question": "What award did he receive at Intuit?", "expect_all": ["Engineering Excellence Award"]}
+{"id": "s01", "group": "synonym", "question": "Does he have experience with message brokers?", "expect_all": ["Kafka"]}
+{"id": "s02", "group": "synonym", "question": "Has he worked on payment fraud detection?", "expect_all": ["fraud"]}
+{"id": "s03", "group": "synonym", "question": "What container orchestration technology does he know?", "expect_all": ["Kubernetes"]}
+{"id": "s04", "group": "synonym", "question": "Any background in single sign-on?", "expect_all": ["SSO"]}
+{"id": "s05", "group": "synonym", "question": "Has he built anything for junk mail filtering?", "expect_all": ["spam"]}
+{"id": "s06", "group": "synonym", "question": "Which user interface libraries has he used?", "expect_all": ["React"]}
+{"id": "s07", "group": "synonym", "question": "Has he managed other developers?", "expect_all": ["mentored"]}
+{"id": "s08", "group": "synonym", "question": "Has he built high traffic systems?", "expect_all": ["throughput"]}
+{"id": "m01", "group": "multihop", "question": "Compare his backend and frontend experience", "expect_all": ["Spring Boot", "React"]}
+{"id": "m02", "group": "multihop", "question": "What is his experience across Java and distributed systems?", "expect_all": ["Java", "Kafka"]}
+{"id": "m03", "group": "multihop", "question": "Summarize his education and his most recent role", "expect_all": ["Maharishi", "Intuit"]}
+{"id": "m04", "group": "multihop", "question": "What testing and continuous integration tools has he used?", "expect_all": ["Jenkins", "JUnit"]}
+{"id": "m05", "group": "multihop", "question": "Which cloud and caching technologies does he know?", "expect_all": ["AWS", "Redis"]}
+{"id": "n01", "group": "negative", "question": "Rust Golang Scala", "expect_empty": true}
+{"id": "n02", "group": "negative", "question": "quantum entanglement physics", "expect_empty": true}
+{"id": "n03", "group": "negative", "question": "pastry baking culinary", "expect_empty": true}
+{"id": "n04", "group": "negative", "question": "Haskell Erlang Clojure", "expect_empty": true}
+{"id": "n05", "group": "negative", "question": "veterinary surgery clinic", "expect_empty": true}
