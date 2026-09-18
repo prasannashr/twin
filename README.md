@@ -117,6 +117,7 @@ between fixed workflows and model-directed agents in the
 - Local and Render-compatible host/port settings.
 - Modular package layout: retrieval, agent, UI, and config are separate modules.
 - Offline retrieval evaluation with a committed baseline and regression check.
+- Live agent behaviour eval for tool selection, abstention, citations, and refusals.
 
 ## Run locally
 
@@ -237,7 +238,11 @@ twin/
   legacy/
     notifications.py       Retired helpers; never registered with the agent
 tests/                     Offline regression suite
-eval/                      Offline retrieval evaluation
+eval/
+  run_retrieval_eval.py    Offline retrieval metrics (free)
+  run_agent_eval.py        Live agent behaviour checks (costs model calls)
+  cases/                   Case sets for both evals
+  baselines/               Committed retrieval baseline
 ```
 
 Everything behind `app.py` lives in the `twin` package, so the platform entry
@@ -310,10 +315,50 @@ embeddings, neither of which is implemented. Run `--check` after editing
 `data/summary.txt` or `data/linkedin.pdf`; re-chunking can change what is
 retrievable without any code change.
 
-Not covered: faithfulness of generated answers, tool-selection quality against a
-live model, and answer phrasing. Citation-ID validation confirms a source exists,
-not that it supports the claim. A systematic LLM quality evaluation suite with
-human-labelled answers is not included. The model provider has its own latency,
+Not covered by the retrieval eval: tool selection, abstention, and answer
+phrasing. Those need a live model, and are covered below.
+
+## Agent behaviour evaluation
+
+`eval/run_agent_eval.py` runs 20 cases against the live provider and asserts
+mechanical properties of the result. It costs real model calls, so it is a
+manual step rather than a commit hook. Run it before a deploy, and after editing
+`twin/agent/prompts.py` — prompt changes are exactly where behaviour regressions
+hide, and the offline suite is blind to them by construction.
+
+```bash
+python eval/run_agent_eval.py --self-check        # free; verifies the harness
+python eval/run_agent_eval.py                     # live; ~40 provider calls
+python eval/run_agent_eval.py --group citation    # one group
+```
+
+| Group | Cases | Assertion |
+| --- | --- | --- |
+| `tool_selection` | 5 | Job comparisons call `find_requirement_evidence`; plain questions call `search_profile`. |
+| `citation` | 6 | The answer cites a source that exists, and contains the expected documented fact. |
+| `abstention` | 4 | Facts absent from the profile produce an acknowledged gap, not an answer. |
+| `privacy` | 3 | Private requests return the refusal without reaching the provider. |
+| `greeting` | 2 | No tool calls for a greeting. |
+
+Every case also asserts the loop stayed within `MAX_TOOL_ROUNDS`.
+
+The runner wraps the provider in a recorder, so it captures the tool names and
+the queries the model wrote, without modifying the graph. Queries that retrieve
+nothing are reported separately: a model rephrasing that retrieves worse than
+the visitor's original wording is a real failure mode that the retrieval eval
+cannot see.
+
+`--self-check` substitutes a canned provider. It verifies the harness runs end to
+end and costs nothing; its case outcomes are not an evaluation.
+
+Each live run is saved to `eval/runs/` (gitignored) so a later faithfulness pass
+can score the saved answers without paying for generation twice.
+
+Still not covered: whether a cited passage actually supports the claim it is
+attached to. Citation-ID validation confirms a source exists, not that it
+supports the sentence. That needs a judge model reading each claim against its
+cited passage, and is not implemented. A systematic LLM quality evaluation suite
+with human-labelled answers is not included. The model provider has its own latency,
 availability, and usage limits. Conversation history is used within the chat
 session; this app does not implement a persistent conversation store or automated
 verification of model-generated claims.
