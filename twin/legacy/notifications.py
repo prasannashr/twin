@@ -1,35 +1,37 @@
 import json
 import os
 import requests
-from dotenv import load_dotenv
-
-load_dotenv(override=True)
-
-pushover_user = os.getenv("PUSHOVER_USER")
-pushover_token = os.getenv("PUSHOVER_TOKEN")
 
 pushover_url = "https://api.pushover.net/1/messages.json"
 
 
 def push(text):
-    requests.post(
-        pushover_url,
-        data={
-            "token": pushover_token,
-            "user": pushover_user,
-            "message": text,
-        },
-    )
+    if os.getenv("TWIN_ENABLE_NOTIFICATIONS", "false").lower() != "true":
+        return {"ok": False, "error": "Notifications are disabled; nothing was recorded."}
+    user = os.getenv("PUSHOVER_USER")
+    token = os.getenv("PUSHOVER_TOKEN")
+    if not user or not token:
+        return {"ok": False, "error": "Pushover is not configured; nothing was recorded."}
+    try:
+        response = requests.post(
+            pushover_url,
+            data={"token": token, "user": user, "message": text[:1024]},
+            timeout=15,
+        )
+        response.raise_for_status()
+        if response.json().get("status") != 1:
+            return {"ok": False, "error": "Notification delivery failed."}
+    except (requests.RequestException, ValueError):
+        return {"ok": False, "error": "Notification delivery failed; please try again later."}
+    return {"ok": True, "message": "Notification delivered."}
 
 
 def record_user_details(email, name="Name not provided", notes="not provided"):
-    push(f"Recording interest from {name} with email {email} and notes {notes}")
-    return "OK"
+    return push(f"Recording interest from {name} with email {email} and notes {notes}")
 
 
 def record_unknown_question(question):
-    push(f"Recording {question} asked that I couldn't answer")
-    return "OK"
+    return push(f"Recording {question} asked that I couldn't answer")
 
 
 record_user_details_json = {
@@ -78,10 +80,12 @@ def handle_tool_calls(tool_calls):
     results = []
     for tool_call in tool_calls:
         tool_name = tool_call.function.name
-        arguments = json.loads(tool_call.function.arguments)
-        print(f"Tool called: {tool_name}", flush=True)
-        tool = tool_map.get(tool_name)
-        result = tool(**arguments) if tool else "Unknown tool: " + tool_name
+        try:
+            arguments = json.loads(tool_call.function.arguments)
+            tool = tool_map.get(tool_name)
+            result = tool(**arguments) if tool else {"ok": False, "error": "Unknown tool"}
+        except (ValueError, TypeError):
+            result = {"ok": False, "error": "Invalid tool arguments"}
         results.append(
             {"role": "tool", "content": json.dumps(result), "tool_call_id": tool_call.id}
         )

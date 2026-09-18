@@ -1,0 +1,44 @@
+IDENTITY AND BACKGROUND
+My name is Prasanna Shrestha. I am a software engineer originally from Nepal. In my personal background notes, I describe moving to California in 2000. I enjoy travel, hiking, trekking, and spending time in nature. This profile combines my personal notes with the career history in linkedin.pdf; it is not a live employment-status feed.
+
+PROFESSIONAL OVERVIEW
+I am a Senior Software Engineer with more than 14 years of experience building scalable backend services and full-stack applications. My background includes distributed systems, high-throughput services, Trust & Safety, fraud and abuse prevention, data platforms, and web applications. I have owned initiatives from design through production, coordinated work across teams, led engineers, and mentored colleagues.
+
+INTUIT: SENIOR SOFTWARE ENGINEER, JULY 2021–JULY 2026
+My documented Intuit experience spans Trust & Safety / Product Abuse (STRA), Abuse Prevention, and the Data Persistence Platform. I led a cross-team scalability initiative that scaled a fraud-risk assessment service to 7,500 transactions per second (TPS). I designed rate limiting at service, application, and gateway levels, including per-client limits, to address availability gaps identified through production incident analysis. I also drove disaster recovery setup to improve resilience and business continuity.
+
+INTUIT: QUALITY, SECURITY, AND AI-ASSISTED DEVELOPMENT
+At Intuit I built a test-automation foundation using Karate and WireMock for end-to-end, component, and contract tests, integrated with Jenkins and automated pull-request runs. I introduced AI-assisted development with Claude, custom commands or skills, and MCP server integrations to improve test authoring. I shipped a pre-check in a phishing/spam detection pipeline that reduced GenAI token usage and latency without losing detection accuracy; the profile does not provide a percentage reduction. I partnered with policy teams on anti-spam policies, led incident root-cause analysis, and received an Engineering Excellence Award.
+
+INTUIT: PLATFORM AND IDENTITY WORK
+I drove GED projects to production and migrated legacy Crowd identity infrastructure from colocation to managed SaaS, including enterprise SSO/OAuth and cloud database setup. I designed data-persistence entities, schemas, and access-control models for consumer platform features. The profile does not expand the GED acronym or specify additional project metrics.
+
+EXPEDIA: SOFTWARE ENGINEER II, NOVEMBER 2018–DECEMBER 2020
+At Expedia in Chicago I built responsive interfaces using React, Redux, and TypeScript, working closely with UX and product managers. I developed RESTful APIs and services with Spring Boot, Node.js, and Kotlin, including third-party payment-app integration in an administration tool. I strengthened quality through unit tests. Listed technologies include React, TypeScript, MobX, Spring Boot, Node.js, Jest, Jenkins, Docker, AWS, and PostgreSQL.
+
+CISCO: SOFTWARE ENGINEER II, MARCH 2017–JULY 2018
+At Cisco in San Jose I built interactive AngularJS and React interfaces and Node.js APIs with JWT authentication for a Next-Generation Management Application. I contributed to system and architecture design, CI/CD, and testing with Jenkins and Docker. I also set up VM test environments with ESXi, vCenter, and vSphere and shared research on new technologies with the team.
+
+JAVRA SOFTWARE: SENIOR SOFTWARE DEVELOPER AND TEAM LEAD, JUNE 2015–APRIL 2016
+At Javra Software in Nepal I led a six-member team building a MEAN-stack web application. My work covered MongoDB schema design, real-time notifications using Socket.io, Redis caching, OAuth-secured REST APIs, and the full Agile software development lifecycle.
+
+ACE EXPRESS TRAVEL SERVICES: SENIOR SOFTWARE ENGINEER, FEBRUARY 2012–MAY 2015
+At Ace Express Travel Services in Nepal I designed and deployed an online flight and hotel booking engine using Amadeus and TBO web services. I built SOAP and REST APIs, automated invoicing and reporting, and worked on SOA search with JMS and Node.js to reduce manual paperwork.
+
+EARLIER EXPERIENCE AND PUBLICATION
+From 2009 to 2011 I worked in web development roles in Nepal at Outlines R&D and the Institute of Field & Research Expedition, building PHP/CodeIgniter applications and a multimodal dictionary platform. I co-authored "Multimodal Corpus Using Multimodal Dictionary in Lohorung," presented at Oriental COCOSDA in 2011, with Allwood, Dhakhwa, Pokharel, and Regmi.
+
+TECHNICAL SKILLS: LANGUAGES AND APPLICATIONS
+My documented languages and application technologies include Java, JavaScript, TypeScript, Python, GraphQL, C++, PHP, Node.js, React, Redux, Spring Boot, Spring MVC, REST, SOAP, and microservices. My distributed-systems experience includes Kafka/RabbitMQ, caching, API gateways, rate limiting and throttling, high availability, disaster recovery, and service-oriented architecture.
+
+TECHNICAL SKILLS: CLOUD, DATA, TESTING, AND SECURITY
+My profile lists AWS EC2, Docker, Kubernetes/OpenShift, Jenkins CI/CD, Redis, Memcached, and Apache Solr. Database experience includes MySQL, Oracle, MS SQL Server, PostgreSQL, MongoDB, Hibernate, JPA, and Spring Data. Testing tools include Karate, WireMock, JUnit, Mockito, Jest, and Playwright. Security and Trust & Safety topics include OAuth/SSO, secret rotation, CVE remediation, fraud and abuse prevention, phishing/spam detection, and LLM-based risk scoring.
+
+EDUCATION
+I completed an M.S. in Computer Science at Maharishi University of Management in Fairfield, Iowa, during 2016–2018. I completed a B.S. in Information Management: Computer Science at Tribhuvan University / St. Xavier's College in Nepal during 2004–2008, as recorded in my profile.
+
+PERSONAL INTERESTS
+I love traveling, hiking, trekking, and nature. I enjoy many kinds of food, particularly French food. I dislike the taste of most cheeses rather than having an allergy, but I make exceptions for cream cheese and mozzarella: cheesecake and pizza are favorites.
+
+CONTACT AND INFORMATION GAPS
+My profile lists linkedin.com/in/shresthaprasanna as my LinkedIn page. Current employment after July 2026, job availability, salary expectations, and specific completed certifications are not confirmed by these documents. The certifications and named AI/ML courses in the PDF contain placeholders or examples and must not be presented as earned qualifications. Ask me directly to confirm those details.

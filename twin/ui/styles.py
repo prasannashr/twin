@@ -6,9 +6,10 @@ PURPLE = "#753991"
 
 EXAMPLES = [
     "Tell me about your background and experience.",
-    "What kinds of projects are you working on now?",
+    "What did you work on at Intuit?",
+    "How does your experience fit a backend role requiring Java, Kafka, and fraud prevention?",
     "What are your strongest technical skills?",
-    "How can I get in touch with you?",
+    "What experience do you have leading engineering teams?",
 ]
 
 CSS = """

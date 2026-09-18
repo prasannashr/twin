@@ -1,7 +1,7 @@
 requests
-gradio
+gradio>=6.24.0,<7
 pypdf
 openai
 python-dotenv
-openrouter
-httpx
+langgraph>=1.2.11,<2
+langsmith>=0.3.18,<1
