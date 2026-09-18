@@ -118,6 +118,7 @@ between fixed workflows and model-directed agents in the
 - Modular package layout: retrieval, agent, UI, and config are separate modules.
 - Offline retrieval evaluation with a committed baseline and regression check.
 - Live agent behaviour eval for tool selection, abstention, citations, and refusals.
+- Faithfulness eval judging each cited claim against the passage it cites.
 
 ## Run locally
 
@@ -241,6 +242,7 @@ tests/                     Offline regression suite
 eval/
   run_retrieval_eval.py    Offline retrieval metrics (free)
   run_agent_eval.py        Live agent behaviour checks (costs model calls)
+  run_faithfulness_eval.py Judges saved answers against their cited passages
   cases/                   Case sets for both evals
   baselines/               Committed retrieval baseline
 ```
@@ -372,11 +374,48 @@ end and costs nothing; its case outcomes are not an evaluation.
 Each live run is saved to `eval/runs/` (gitignored) so a later faithfulness pass
 can score the saved answers without paying for generation twice.
 
-Still not covered: whether a cited passage actually supports the claim it is
-attached to. Citation-ID validation confirms a source exists, not that it
-supports the sentence. That needs a judge model reading each claim against its
-cited passage, and is not implemented. A systematic LLM quality evaluation suite
-with human-labelled answers is not included. The model provider has its own latency,
+## Faithfulness evaluation
+
+Citation-ID validation confirms a source exists, not that it supports the
+sentence attached to it. `eval/run_faithfulness_eval.py` scores that gap: it
+reads a saved agent run, pairs every cited span with the passages it cites, and
+asks a judge model whether the passage supports the claim.
+
+```bash
+python eval/run_faithfulness_eval.py --self-check   # free; verifies the harness
+python eval/run_faithfulness_eval.py                # judges the newest run
+python eval/run_faithfulness_eval.py --run eval/runs/agent-....json
+```
+
+Because it reads a saved run, generation is not paid for twice; only the judge
+calls cost anything. It also re-checks structurally that every citation ID
+resolves to a passage in its own request.
+
+A claim is the text running up to a citation run, which is what that citation
+stands behind. For bullet answers that is the bullet. Splitting on sentence
+boundaries instead orphans the marker, because answers end lines as
+`...per second**. [S1]`.
+
+Latest run: **27 of 28 claims supported (96%)**, one partial, none unsupported.
+
+The partial is a genuine overreach. Asked about testing frameworks, the agent
+answered that documented experience "includes unit, integration, contract, and
+end-to-end (E2E) testing, as well as TDD" citing `[S1]`. That passage reads
+"JUnit, Mockito, Jest, Enzyme, Playwright, Karate, WireMock; contract,
+integration, and E2E testing; TDD" — the only occurrence of "unit" is inside
+"JUnit". Unit testing is a reasonable inference from those tools, but it is not
+documented, and the citation-ID check cannot catch it because `[S1]` is a valid
+source that simply does not say it.
+
+A judge model is not ground truth. Its verdicts were spot-checked by hand
+against the passages, including the flagged one; treat the flagged list as a
+triage queue rather than a score, and check some "supported" verdicts too, or
+the judge is rubber-stamping unchecked.
+
+Not covered by any of the three suites: answer phrasing and tone, multi-turn
+follow-up behaviour, and adversarial prompt injection beyond the privacy cases.
+A systematic LLM quality evaluation suite with human-labelled answers is not
+included. The model provider has its own latency,
 availability, and usage limits. Conversation history is used within the chat
 session; this app does not implement a persistent conversation store or automated
 verification of model-generated claims.
